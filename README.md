@@ -3,7 +3,6 @@
 **Authors:** Arhaan Sareen, Aditya Saxena  
 **Affiliation:** QSYS 2026 Participant, Institute for Quantum Computing, University of Waterloo  
 **Correspondence:** arhaan.sareen@gmail.com  
-**Target venue:** Journal of Student Research / arXiv quant-ph
 
 ---
 
