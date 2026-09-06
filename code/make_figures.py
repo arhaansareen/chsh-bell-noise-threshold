@@ -548,6 +548,80 @@ def fig6_threshold_bars(data):
 
 
 # ---------------------------------------------------------------------------
+# Fig7: Hardware validation
+# ---------------------------------------------------------------------------
+
+def fig7_hardware_validation():
+    hw_path = os.path.join(RESULTS_DIR, "hardware_results.json")
+    if not os.path.exists(hw_path):
+        print("  Skipping fig7: hardware_results.json not found.")
+        return None
+
+    with open(hw_path) as f:
+        hw = json.load(f)
+
+    states = list(hw["results"].keys())
+    S_hw = [abs(hw["results"][s]["S"]) for s in states]
+    S_theory = [TSIRELSON_BOUND] * len(states)
+    S_classical = [CLASSICAL_BOUND] * len(states)
+
+    x = np.arange(len(states))
+    width = 0.35
+
+    colors_hw = ["#2166ac", "#4dac26", "#d7191c", "#fdae61"]
+
+    fig, ax = plt.subplots(figsize=(7, 4.5))
+
+    bars = ax.bar(x, S_hw, width, color=colors_hw, edgecolor="white",
+                  linewidth=1.5, zorder=3, label="Hardware $|S|$")
+
+    for bar, val in zip(bars, S_hw):
+        ax.text(
+            bar.get_x() + bar.get_width() / 2,
+            bar.get_height() + 0.02,
+            f"{val:.3f}",
+            ha="center", va="bottom", fontsize=9, fontweight="bold",
+        )
+
+    ax.axhline(TSIRELSON_BOUND, color="#333333", lw=1.5, linestyle="--",
+               zorder=4, label=f"Tsirelson bound $2\\sqrt{{2}}={TSIRELSON_BOUND:.3f}$")
+    ax.axhline(CLASSICAL_BOUND, color="#d62728", lw=1.5, linestyle=":",
+               zorder=4, label=f"Classical bound $S=2$")
+
+    ax.fill_between([-0.5, len(states) - 0.5], CLASSICAL_BOUND, 0,
+                    color="#d62728", alpha=0.06, zorder=0)
+
+    ax.set_xticks(x)
+    ax.set_xticklabels([f"$|\\{s.replace('+','+')}\\rangle$" if '+' in s or '-' in s
+                        else f"$|\\{s}\\rangle$" for s in states], fontsize=11)
+    ax.set_ylabel("CHSH parameter $|S|$", fontsize=12)
+    ax.set_title(
+        "Hardware Bell Test on IBM ibm\\_fez\n"
+        f"(4{chr(8201)}096 shots, {hw['meta']['backend']})",
+        fontsize=11,
+    )
+    ax.set_ylim(0, 3.1)
+    ax.set_xlim(-0.5, len(states) - 0.5)
+    ax.legend(fontsize=9, framealpha=0.95, loc="lower right")
+    ax.grid(True, axis="y", alpha=0.35, zorder=0)
+    ax.set_axisbelow(True)
+
+    mean_S = np.mean(S_hw)
+    noise_gap = TSIRELSON_BOUND - mean_S
+    ax.text(
+        0.02, 0.97,
+        f"Mean $|S|={mean_S:.3f}$\nNoise gap: ${noise_gap:.3f}$",
+        transform=ax.transAxes,
+        ha="left", va="top", fontsize=8,
+        bbox=dict(facecolor="#EEF4FF", edgecolor="#6699CC",
+                  boxstyle="round,pad=0.4", alpha=0.9),
+    )
+
+    fig.tight_layout()
+    return fig
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -585,6 +659,12 @@ def main():
     fig = fig6_threshold_bars(data)
     save_fig(fig, "fig6_thresholds")
     plt.close(fig)
+
+    print("Generating fig7 — hardware validation...")
+    fig = fig7_hardware_validation()
+    if fig is not None:
+        save_fig(fig, "fig7_hardware")
+        plt.close(fig)
 
     print(f"\nAll figures saved to {FIGURES_DIR}")
 

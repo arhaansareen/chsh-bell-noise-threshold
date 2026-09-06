@@ -561,6 +561,55 @@ In practice, this means angle calibration errors do not appreciably reduce the u
   \label{fig:threshold_comparison}
 \end{figure}
 
+\subsection{Hardware Bell Test on IBM Quantum}
+\label{subsec:hardware}
+
+To validate the simulation results on real quantum hardware, we executed CHSH Bell tests
+on the IBM \texttt{ibm\_fez} processor (156 qubits, superconducting, Eagle~R3 architecture)
+via IBM Quantum Platform, using 4096 shots per circuit.
+For each of the four Bell states, we prepared the state in hardware, applied the four
+optimal measurement basis rotations, and extracted correlators from the resulting bitstring counts.
+The CHSH parameter $|S|$ was computed from the four correlators $E(a,b)$, $E(a,b')$,
+$E(a',b)$, $E(a',b')$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccc}
+\toprule
+Bell State & $|S|_\text{hardware}$ & Violates ($|S|>2$)? & $|S|_\text{ideal}$ \\
+\midrule
+$|\Phi^+\rangle$ & 2.570 & Yes & $2\sqrt{2} \approx 2.828$ \\
+$|\Phi^-\rangle$ & 2.608 & Yes & $2\sqrt{2} \approx 2.828$ \\
+$|\Psi^+\rangle$ & 2.549 & Yes & $2\sqrt{2} \approx 2.828$ \\
+$|\Psi^-\rangle$ & 2.510 & Yes & $2\sqrt{2} \approx 2.828$ \\
+\bottomrule
+\end{tabular}
+\caption{CHSH parameter $|S|$ measured on IBM \texttt{ibm\_fez} hardware (4096 shots).
+All four Bell states yield $|S| > 2$, violating the classical bound and confirming
+genuine quantum nonlocality on real hardware.}
+\label{tab:hardware}
+\end{table}
+
+All four Bell states violate the classical bound $|S| = 2$ on real hardware, with
+$|S|$ ranging from $2.510$ to $2.608$ (mean $2.559$).
+The noise gap from the ideal Tsirelson bound $2\sqrt{2} \approx 2.828$ is approximately $0.269$,
+corresponding to an effective depolarizing noise rate of $p_\text{eff} \approx 0.095$
+from Theorem~\ref{thm:depol}, comfortably below the theoretical threshold $\pstar = 0.2929$.
+This confirms that current IBM superconducting hardware can reliably certify Bell
+nonlocality with high statistical confidence.
+Figure~\ref{fig:hardware} shows the measured $|S|$ values alongside the classical and
+Tsirelson bounds.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{figures/fig7_hardware.png}
+  \caption{Measured CHSH parameter $|S|$ for all four Bell states on IBM \texttt{ibm\_fez}
+           (4096 shots). All states exceed the classical bound $S = 2$ (red dotted line),
+           confirming Bell nonlocality on real hardware. The dashed line marks the Tsirelson
+           bound $2\sqrt{2}$; the gap reflects effective hardware noise of $p_\text{eff} \approx 0.095$.}
+  \label{fig:hardware}
+\end{figure}
+
 % ============================================================
 \section{Discussion}
 \label{sec:discussion}
@@ -656,6 +705,11 @@ circuit architecture.
   \pstar = 1 - \frac{1}{\sqrt{2}} \approx 0.2929.
   \label{eq:pstar_final}
 \end{equation}
+
+Hardware Bell tests on IBM \texttt{ibm\_fez} validate these predictions: all four Bell states
+yield $|S| > 2$ on real superconducting qubits (mean $|S| = 2.559$), with an effective noise
+rate of $p_\text{eff} \approx 0.095$ --- well below the theoretical threshold.
+Current hardware is firmly in the violation regime, consistent with the depth budget estimates derived here.
 
 Several extensions follow naturally.
 The same question for multipartite states (GHZ, graph states, resource states for
