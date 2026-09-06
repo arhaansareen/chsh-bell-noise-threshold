@@ -448,7 +448,7 @@ admits a local hidden-variable description and is no longer useful for device-in
 \label{subsec:res_noise_comparison}
 
 Figure~\ref{fig:noise_comparison} places all three noise models on a common axis,
-making the hierarchy immediately visible (Table~\ref{tab:thresholds}).
+shown in Table~\ref{tab:thresholds}.
 
 \begin{table}[H]
   \centering
@@ -595,8 +595,8 @@ $|S|$ ranging from $2.510$ to $2.608$ (mean $2.559$).
 The noise gap from the ideal Tsirelson bound $2\sqrt{2} \approx 2.828$ is approximately $0.269$,
 corresponding to an effective depolarizing noise rate of $p_\text{eff} \approx 0.095$
 from Theorem~\ref{thm:depol}, comfortably below the theoretical threshold $\pstar = 0.2929$.
-This confirms that current IBM superconducting hardware can reliably certify Bell
-nonlocality with high statistical confidence.
+Current IBM superconducting hardware certifies Bell nonlocality, at least for shallow
+circuits like these.
 Figure~\ref{fig:hardware} shows the measured $|S|$ values alongside the classical and
 Tsirelson bounds.
 
@@ -708,10 +708,10 @@ circuit architecture.
 
 Hardware Bell tests on IBM \texttt{ibm\_fez} validate these predictions: all four Bell states
 yield $|S| > 2$ on real superconducting qubits (mean $|S| = 2.559$), with an effective noise
-rate of $p_\text{eff} \approx 0.095$ --- well below the theoretical threshold.
+rate of $p_\text{eff} \approx 0.095$, well below the theoretical threshold.
 Current hardware is firmly in the violation regime, consistent with the depth budget estimates derived here.
 
-Several extensions follow naturally.
+A few directions are worth pursuing.
 The same question for multipartite states (GHZ, graph states, resource states for
 measurement-based quantum computation) remains largely open analytically; the tracelessness
 argument and Werner state connection may generalize, but the richer structure of multipartite
