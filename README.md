@@ -1,7 +1,7 @@
 # CHSH Bell Inequality Violation Under Noise: A Threshold Analysis for Near-Term Quantum Devices
 
 **Authors:** Arhaan Sareen, Aditya Saxena
-**Affiliation:** QSYS 2026, Institute for Quantum Computing, University of Waterloo
+**Affiliation:** QSYS 2026
 
 ---
 
@@ -135,7 +135,7 @@ pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
   title   = {CHSH Bell Inequality Violation Under Noise: A Threshold Analysis for Near-Term Quantum Devices},
   author  = {Sareen, Arhaan and Saxena, Aditya},
   year    = {2026},
-  note    = {QSYS 2026, Institute for Quantum Computing, University of Waterloo}
+  note    = {QSYS 2026}
 }
 ```
 
